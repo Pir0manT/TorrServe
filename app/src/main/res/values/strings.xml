@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">TorrServe MatriX</string>
+    <string name="app_name" translatable="false">TorrServe Search</string>
 
     <string name="add">Add</string>
     <string name="rutor" translatable="false">RuTor</string>

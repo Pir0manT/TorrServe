@@ -9,13 +9,13 @@ plugins {
 android {
     compileSdk 35
     defaultConfig {
-        applicationId "ru.yourok.torrserve"
+        applicationId "ru.yourok.torrserve.search"
         minSdkVersion 16
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 141
-        versionName "MatriX.141.Client"
+        versionName "MatriX.141.Search"
         setProperty("archivesBaseName", "TorrServe_" + versionName)
         // Use SupportLibrary for vectors
         vectorDrawables.useSupportLibrary = true
