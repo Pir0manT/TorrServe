@@ -287,6 +287,12 @@
     <string name="no_torrents">No Torrents</string>
     <string name="search_torrents">Search torrents\u2026</string>
     <string name="voice_search_unavailable">Voice search unavailable</string>
+    <string name="import_settings_title">Import settings from TorrServe</string>
+    <string name="import_settings_summary">Import all settings from the original TorrServe app (requires root)</string>
+    <string name="import_settings_success">Settings imported successfully. Restart the app to apply.</string>
+    <string name="import_settings_no_root">Root access required to import settings</string>
+    <string name="import_settings_not_found">Original TorrServe settings not found</string>
+    <string name="import_settings_error">Error importing settings</string>
     <string name="no_updates">No updates found</string>
     <string name="not_used">Not Used</string>
     <string name="not_installed">Not Installed</string>

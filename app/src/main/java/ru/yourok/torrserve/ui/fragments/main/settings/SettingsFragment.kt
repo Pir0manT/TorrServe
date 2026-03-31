@@ -10,9 +10,11 @@ import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
+import android.util.Xml
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -22,11 +24,14 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
 import androidx.preference.PreferenceGroupAdapter
+import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
 import androidx.preference.PreferenceViewHolder
 import androidx.preference.SwitchPreferenceCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.topjohnwu.superuser.Shell
+import org.xmlpull.v1.XmlPullParser
+import java.io.StringReader
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -239,6 +244,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
+        findPreference<Preference>("import_settings")?.apply {
+            setOnPreferenceClickListener {
+                importSettingsFromOriginal()
+                true
+            }
+        }
+
         findPreference<Preference>("version")?.apply {
             this.summary = BuildConfig.VERSION_NAME
             setOnPreferenceClickListener {
@@ -373,6 +385,86 @@ class SettingsFragment : PreferenceFragmentCompat() {
             this.isChecked = Accessibility.isEnabledService(App.context)
             if (this.isChecked)
                 findPreference<SwitchPreferenceCompat>("boot_start")?.isChecked = true
+        }
+    }
+
+    private fun importSettingsFromOriginal() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                if (!Shell.rootAccess()) {
+                    withContext(Dispatchers.Main) {
+                        App.toast(R.string.import_settings_no_root, true)
+                    }
+                    return@launch
+                }
+
+                val prefsPath = "/data/data/ru.yourok.torrserve/shared_prefs/ru.yourok.torrserve_preferences.xml"
+                val result = Shell.su("cat $prefsPath").exec()
+
+                if (!result.isSuccess || result.out.isEmpty()) {
+                    withContext(Dispatchers.Main) {
+                        App.toast(R.string.import_settings_not_found, true)
+                    }
+                    return@launch
+                }
+
+                val xml = result.out.joinToString("\n")
+                val prefs = PreferenceManager.getDefaultSharedPreferences(App.context)
+
+                prefs.edit {
+                    val parser = Xml.newPullParser()
+                    parser.setInput(StringReader(xml))
+
+                    var eventType = parser.eventType
+                    while (eventType != XmlPullParser.END_DOCUMENT) {
+                        if (eventType == XmlPullParser.START_TAG) {
+                            val tag = parser.name
+                            val name = parser.getAttributeValue(null, "name")
+                            val value = parser.getAttributeValue(null, "value")
+
+                            if (name != null) {
+                                when (tag) {
+                                    "string" -> {
+                                        parser.next()
+                                        val text = if (parser.eventType == XmlPullParser.TEXT) parser.text else ""
+                                        putString(name, text)
+                                    }
+                                    "boolean" -> putBoolean(name, value == "true")
+                                    "int" -> putInt(name, value?.toIntOrNull() ?: 0)
+                                    "long" -> putLong(name, value?.toLongOrNull() ?: 0L)
+                                    "float" -> putFloat(name, value?.toFloatOrNull() ?: 0f)
+                                    "set" -> {
+                                        val stringSet = mutableSetOf<String>()
+                                        var inner = parser.next()
+                                        while (inner != XmlPullParser.END_TAG || parser.name != "set") {
+                                            if (inner == XmlPullParser.START_TAG && parser.name == "string") {
+                                                parser.next()
+                                                if (parser.eventType == XmlPullParser.TEXT) {
+                                                    stringSet.add(parser.text)
+                                                }
+                                            }
+                                            inner = parser.next()
+                                        }
+                                        putStringSet(name, stringSet)
+                                    }
+                                }
+                            }
+                        }
+                        eventType = parser.next()
+                    }
+                }
+
+                withContext(Dispatchers.Main) {
+                    App.toast(R.string.import_settings_success, true)
+                    // Refresh the settings screen
+                    requireActivity().recreate()
+                }
+            } catch (e: Exception) {
+                if (BuildConfig.DEBUG) Log.e("*****", "Import settings error", e)
+                withContext(Dispatchers.Main) {
+                    App.toast(R.string.import_settings_error, true)
+                }
+            }
         }
     }
 

@@ -135,6 +135,11 @@
         app:title="@string/show_battery_save_title" />
 
     <Preference
+        app:key="import_settings"
+        app:summary="@string/import_settings_summary"
+        app:title="@string/import_settings_title" />
+
+    <Preference
         app:key="version"
         app:title="@string/app_version" />
 
