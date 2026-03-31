@@ -82,6 +82,8 @@ class App : MultiDexApplication() {
             .addObserver(lifecycleEventObserver)
         // Track activities
         registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
+        // Crash logger
+        Thread.setDefaultUncaughtExceptionHandler(CrashLogger())
         // DayNight Auto ON/OFF
         ThemeUtil.setNightMode()
 
