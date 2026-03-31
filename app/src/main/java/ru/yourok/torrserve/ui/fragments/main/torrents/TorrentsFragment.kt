@@ -145,8 +145,8 @@ class TorrentsFragment : TSFragment() {
                     torrent.category?.contains(currentCategory, true) == true
 
             val matchesSearch = query.isEmpty() ||
-                    torrent.title.lowercase().contains(query) ||
-                    torrent.name.lowercase().contains(query) ||
+                    torrent.title?.lowercase()?.contains(query) == true ||
+                    torrent.name?.lowercase()?.contains(query) == true ||
                     torrent.category?.lowercase()?.contains(query) == true ||
                     torrent.data?.lowercase()?.contains(query) == true
 
