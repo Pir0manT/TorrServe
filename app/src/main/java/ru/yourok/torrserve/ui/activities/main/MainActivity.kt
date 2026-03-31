@@ -535,7 +535,7 @@ class MainActivity : AppCompatActivity() {
     private fun filterTorrents(category: String = "") {
         if (isInTorrents) {
             val f = supportFragmentManager.findFragmentById(R.id.container)
-            lifecycleScope.launch { (f as TorrentsFragment?)?.filter(category) }
+            (f as TorrentsFragment?)?.filter(category)
         }
     }
 

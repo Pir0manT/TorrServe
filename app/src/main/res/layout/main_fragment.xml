@@ -1,17 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="4dp"
+        android:hint="@string/search_torrents"
+        app:endIconMode="clear_text"
+        app:startIconDrawable="@drawable/round_mic_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSearchTorrents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:nextFocusDown="@id/lvTorrents"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <ListView
         android:id="@+id/lvTorrents"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:divider="@drawable/gradient_divider_green"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="84dp"
         android:listSelector="@drawable/action_selector"
+        android:nextFocusUp="@id/etSearchTorrents"
         android:requiresFadingEdge="vertical" />
 
     <TextView
@@ -23,4 +49,4 @@
         android:textSize="18sp"
         android:visibility="gone" />
 
-</FrameLayout>
+</LinearLayout>

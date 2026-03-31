@@ -285,6 +285,8 @@
 
     <string name="no_data">No data</string>
     <string name="no_torrents">No Torrents</string>
+    <string name="search_torrents">Search torrents\u2026</string>
+    <string name="voice_search_unavailable">Voice search unavailable</string>
     <string name="no_updates">No updates found</string>
     <string name="not_used">Not Used</string>
     <string name="not_installed">Not Installed</string>

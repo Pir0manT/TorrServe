@@ -230,6 +230,8 @@
     <string name="sort_by_date">Сортировка по дате</string>
     <string name="no_data">Нет данных</string>
     <string name="no_torrents">Нет торрентов</string>
+    <string name="search_torrents">Поиск торрентов\u2026</string>
+    <string name="voice_search_unavailable">Голосовой поиск недоступен</string>
     <string name="no_updates">Нет обновлений</string>
     <string name="not_used">Не используется</string>
     <string name="not_installed">Не установлен</string>
