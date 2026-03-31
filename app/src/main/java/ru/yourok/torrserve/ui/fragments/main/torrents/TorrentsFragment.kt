@@ -136,6 +136,7 @@ class TorrentsFragment : TSFragment() {
     }
 
     private fun applyFilter() {
+        if (!isViewModelInitialized()) return
         val fullList = (viewModel as TorrentsViewModel).data?.value ?: return
         val query = searchQuery
 
