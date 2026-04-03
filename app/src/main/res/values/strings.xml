@@ -287,6 +287,15 @@
     <string name="no_torrents">No Torrents</string>
     <string name="search_torrents">Search torrents\u2026</string>
     <string name="voice_search_unavailable">Voice search unavailable</string>
+    <string name="search_in_name">Search in torrent file name</string>
+    <string name="search_in_name_on">Also search in original torrent file name</string>
+    <string name="search_in_name_off">Don\'t search in torrent file name</string>
+    <string name="search_in_category">Search in category</string>
+    <string name="search_in_category_on">Also search in category field</string>
+    <string name="search_in_category_off">Don\'t search in category</string>
+    <string name="search_in_data">Search in data</string>
+    <string name="search_in_data_on">Also search in data field</string>
+    <string name="search_in_data_off">Don\'t search in data</string>
     <string name="import_settings_title">Import settings from TorrServe</string>
     <string name="import_settings_summary">Import all settings from the original TorrServe app (requires root)</string>
     <string name="import_settings_success">Settings imported successfully. Restart the app to apply.</string>

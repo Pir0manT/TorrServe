@@ -140,15 +140,30 @@ class TorrentsFragment : TSFragment() {
         val fullList = (viewModel as TorrentsViewModel).data?.value ?: return
         val query = searchQuery
 
+        val searchInName = Settings.get("search_in_name", false)
+        val searchInCategory = Settings.get("search_in_category", false)
+        val searchInData = Settings.get("search_in_data", false)
+
         val filtered = fullList.filter { torrent ->
             val matchesCategory = currentCategory.isEmpty() ||
                     torrent.category?.contains(currentCategory, true) == true
 
-            val matchesSearch = query.isEmpty() ||
-                    torrent.title?.lowercase()?.contains(query) == true ||
-                    torrent.name?.lowercase()?.contains(query) == true ||
-                    torrent.category?.lowercase()?.contains(query) == true ||
-                    torrent.data?.lowercase()?.contains(query) == true
+            // Search in displayed title (title, or name as fallback if title is blank)
+            val displayedTitle = if (torrent.title.isNullOrBlank()) torrent.name else torrent.title
+            var matchesSearch = query.isEmpty() ||
+                    displayedTitle?.lowercase()?.contains(query) == true
+
+            // Optional: also search in original torrent file name
+            if (!matchesSearch && searchInName)
+                matchesSearch = torrent.name?.lowercase()?.contains(query) == true
+
+            // Optional: also search in category
+            if (!matchesSearch && searchInCategory)
+                matchesSearch = torrent.category?.lowercase()?.contains(query) == true
+
+            // Optional: also search in data
+            if (!matchesSearch && searchInData)
+                matchesSearch = torrent.data?.lowercase()?.contains(query) == true
 
             matchesCategory && matchesSearch
         }

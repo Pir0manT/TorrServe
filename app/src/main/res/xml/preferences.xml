@@ -134,6 +134,27 @@
         app:summary="@string/show_battery_save_summary"
         app:title="@string/show_battery_save_title" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:summaryOff="@string/search_in_name_off"
+        android:summaryOn="@string/search_in_name_on"
+        app:key="search_in_name"
+        app:title="@string/search_in_name" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:summaryOff="@string/search_in_category_off"
+        android:summaryOn="@string/search_in_category_on"
+        app:key="search_in_category"
+        app:title="@string/search_in_category" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:summaryOff="@string/search_in_data_off"
+        android:summaryOn="@string/search_in_data_on"
+        app:key="search_in_data"
+        app:title="@string/search_in_data" />
+
     <Preference
         app:key="import_settings"
         app:summary="@string/import_settings_summary"

@@ -232,6 +232,15 @@
     <string name="no_torrents">Нет торрентов</string>
     <string name="search_torrents">Поиск торрентов\u2026</string>
     <string name="voice_search_unavailable">Голосовой поиск недоступен</string>
+    <string name="search_in_name">Искать в имени торрент-файла</string>
+    <string name="search_in_name_on">Также искать в оригинальном имени торрент-файла</string>
+    <string name="search_in_name_off">Не искать в имени торрент-файла</string>
+    <string name="search_in_category">Искать в категории</string>
+    <string name="search_in_category_on">Также искать в поле категории</string>
+    <string name="search_in_category_off">Не искать в категории</string>
+    <string name="search_in_data">Искать в данных</string>
+    <string name="search_in_data_on">Также искать в поле данных</string>
+    <string name="search_in_data_off">Не искать в данных</string>
     <string name="import_settings_title">Импорт настроек из TorrServe</string>
     <string name="import_settings_summary">Импортировать все настройки из оригинального приложения TorrServe (нужен root)</string>
     <string name="import_settings_success">Настройки импортированы. Перезапустите приложение для применения.</string>
